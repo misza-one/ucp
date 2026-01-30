@@ -277,7 +277,8 @@ def define_env(env):
 
     Args:
     ----
-      ref_string: e.g., "types/line_item.create_req.json" or "types/pagination.json#/$defs/response"
+      ref_string: e.g., "types/line_item.create_req.json" or
+        "types/pagination.json#/$defs/response"
       spec_file_name: e.g., "checkout"
       context: Optional dict with 'io_type' (request/response) for polymorphic
         type handling.
@@ -300,8 +301,8 @@ def define_env(env):
     # This handles cases like "types/pagination.json#/$defs/response"
     fragment = None
     ref_path = ref_string
-    if '#/$defs/' in ref_string:
-      ref_path, fragment = ref_string.split('#/$defs/', 1)
+    if "#/$defs/" in ref_string:
+      ref_path, fragment = ref_string.split("#/$defs/", 1)
 
     filename = Path(ref_path).name
 
@@ -317,8 +318,12 @@ def define_env(env):
     # e.g. "checkout_response" -> "Checkout Response"
     # e.g. "pagination" + fragment "response" -> "Pagination Response"
     if fragment:
-      base_text = raw_name.replace("_", " ").replace(".", " ").replace("-", " ").title()
-      fragment_text = fragment.replace("_", " ").replace(".", " ").replace("-", " ").title()
+      base_text = (
+        raw_name.replace("_", " ").replace(".", " ").replace("-", " ").title()
+      )
+      fragment_text = (
+        fragment.replace("_", " ").replace(".", " ").replace("-", " ").title()
+      )
       link_text = f"{base_text} {fragment_text}"
     else:
       link_text = (
@@ -344,11 +349,12 @@ def define_env(env):
 
     anchor_name = base_entity.replace("_", "-")
 
-    # Handle fragment in anchor (e.g., pagination#/$defs/response -> pagination-response)
+    # Handle fragment in anchor
+    # e.g., pagination#/$defs/response -> pagination-response
     if fragment:
-      fragment_anchor = fragment.replace('_', '-')
+      fragment_anchor = fragment.replace("_", "-")
       if anchor_name:  # External ref: base-fragment
-        anchor_name = f'{anchor_name}-{fragment_anchor}'
+        anchor_name = f"{anchor_name}-{fragment_anchor}"
       else:  # Internal ref like #/$defs/context: just use fragment
         anchor_name = fragment_anchor
     elif len(parts) > 1:

@@ -87,6 +87,7 @@ sdjwt
 shopify
 superfences
 talla
+tracción
 upsell
 upsells
 variante
